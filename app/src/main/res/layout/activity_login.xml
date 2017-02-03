@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="16dp"
-    tools:context="com.csivit.tarush.csi_membersapp.LoginActivity"
+    tools:context="com.csivit.tarush.csi_membersapp.activity.LoginActivity"
     android:weightSum="1">
 
     <!-- Login progress -->

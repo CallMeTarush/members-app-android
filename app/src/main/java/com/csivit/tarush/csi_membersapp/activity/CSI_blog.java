@@ -1,8 +1,10 @@
-package com.csivit.tarush.csi_membersapp;
+package com.csivit.tarush.csi_membersapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
+
+import com.csivit.tarush.csi_membersapp.R;
 
 public class CSI_blog extends AppCompatActivity {
 

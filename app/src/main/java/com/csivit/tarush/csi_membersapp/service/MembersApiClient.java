@@ -1,14 +1,11 @@
-package com.csivit.tarush.csi_membersapp;
+package com.csivit.tarush.csi_membersapp.service;
 
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by Tarush on 2/2/2017.
- */
 
-public class apiclient {
+public class MembersApiClient {
 
         public static final String BASE_URL = "https://private-anon-feef5138b9-csimem.apiary-mock.com/";
         private static Retrofit retrofit = null;
