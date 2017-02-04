@@ -1,7 +1,9 @@
 package com.csivit.tarush.csi_membersapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -22,6 +24,34 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(MainActivity.this, IntroActivity.class);
+                    startActivity(i);
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //e.putBoolean("firstStart", false);
+
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

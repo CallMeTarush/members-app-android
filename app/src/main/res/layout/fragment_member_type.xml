@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    tools:context="com.csivit.tarush.csi_membersapp.fragments.MemberTypeFragment"
+    android:paddingBottom="@dimen/appIntroBottomBarHeight"
+    android:weightSum="4">
+
+    <TextView
+        android:text="Please select your type"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:id="@+id/textView2"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:textColor="@android:color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/textView"
+            android:layout_centerHorizontal="true">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2 Credit Course"
+                android:textColor="@android:color/white"
+                android:theme="@style/MyRadioButton"
+                />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paid Member"
+                android:textColor="@android:color/white"
+                android:theme="@style/MyRadioButton"
+                />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Normal VITian"
+                android:textColor="@android:color/white"
+                android:theme="@style/MyRadioButton"
+                />
+        </RadioGroup>
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:theme="@style/MyTextBox">
+        <EditText android:id="@+id/input_mem_key"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:hint="Key (given by CSI)"
+            android:textColor="@android:color/white"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+</LinearLayout>
