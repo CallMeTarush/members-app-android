@@ -1,4 +1,4 @@
-package com.csivit.tarush.csi_membersapp.fragments;
+package com.csivit.tarush.csi_membersapp.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

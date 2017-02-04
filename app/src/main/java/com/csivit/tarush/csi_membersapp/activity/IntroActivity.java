@@ -1,22 +1,26 @@
 package com.csivit.tarush.csi_membersapp.activity;
 
 import android.app.ProgressDialog;
-import android.net.Uri;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.csivit.tarush.csi_membersapp.R;
-import com.csivit.tarush.csi_membersapp.fragments.MemberTypeFragment;
-import com.csivit.tarush.csi_membersapp.fragments.RegistrationFragment;
+import com.csivit.tarush.csi_membersapp.fragment.MemberTypeFragment;
+import com.csivit.tarush.csi_membersapp.fragment.RegistrationFragment;
+import com.csivit.tarush.csi_membersapp.model.response.AuthResponse;
+import com.csivit.tarush.csi_membersapp.presenter.IntroPresenter;
+import com.csivit.tarush.csi_membersapp.service.DataStore;
 import com.github.paolorotolo.appintro.AppIntro;
-import com.github.paolorotolo.appintro.AppIntro2;
 import com.github.paolorotolo.appintro.AppIntro2Fragment;
-import com.github.paolorotolo.appintro.AppIntroFragment;
 
 
-public class IntroActivity extends AppIntro {
+public class IntroActivity extends AppIntro{
+
+    private IntroPresenter introPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,16 +45,43 @@ public class IntroActivity extends AppIntro {
 
         //TODO: Get Values from the Member Type Fragment and update the User Object
 
-
+        doSignUp();
         // Do something when users tap on Done button.
     }
 
-    private void onSignUp(){
+    private void doSignUp(){
         final ProgressDialog progressDialog = new ProgressDialog(IntroActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
+
+        //TODO: Improve this to segregate logic and presentation
+        introPresenter = new IntroPresenter(this, new IntroPresenter.IntroPresenterListener() {
+            @Override
+            public void onAuthSuccess(AuthResponse authResponse) {
+                progressDialog.hide();
+                if(authResponse.getStatus().getStatusCode() == 201){
+                    SharedPreferences getPrefs = PreferenceManager
+                            .getDefaultSharedPreferences(getBaseContext());
+                    SharedPreferences.Editor e = getPrefs.edit();
+                    e.putString("userToken", authResponse.getUserToken());
+                    e.apply();
+
+                    Intent i = new Intent(IntroActivity.this, MainActivity.class);
+                    startActivity(i);
+
+                    finish();
+                }
+            }
+
+            @Override
+            public void onAuthFailure(Error e) {
+
+            }
+        });
+
+        introPresenter.doRegister(DataStore.getInstance().getRegisteringUser());
     }
 
     @Override
@@ -63,4 +94,5 @@ public class IntroActivity extends AppIntro {
             f.saveDetails();
         }
     }
+
 }

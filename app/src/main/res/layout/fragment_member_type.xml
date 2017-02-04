@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context="com.csivit.tarush.csi_membersapp.fragments.MemberTypeFragment"
+    tools:context="com.csivit.tarush.csi_membersapp.fragment.MemberTypeFragment"
     android:paddingBottom="@dimen/appIntroBottomBarHeight"
     android:weightSum="4">
 

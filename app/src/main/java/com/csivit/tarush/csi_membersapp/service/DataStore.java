@@ -10,7 +10,7 @@ public class DataStore {
         return ourInstance;
     }
 
-    private String jwtToken;
+    private String jwtToken = null;
     private User registeringUser;
 
     private DataStore() {

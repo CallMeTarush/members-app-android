@@ -43,9 +43,11 @@ public class MainActivity extends AppCompatActivity
                     startActivity(i);
                     SharedPreferences.Editor e = getPrefs.edit();
 
-                    //e.putBoolean("firstStart", false);
+                    e.putBoolean("firstStart", false);
 
                     e.apply();
+
+                    MainActivity.this.finish();
                 }
             }
         });
