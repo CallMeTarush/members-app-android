@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="android.Mayank.CsiApp.Fragments.Events_fragment">
+    tools:context=".activity.MainActivity">
 
     <!-- TODO: Update blank fragment layout -->
 
     <ListView
-        android:id="@+id/event_List"
+        android:id="@android:id/list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
