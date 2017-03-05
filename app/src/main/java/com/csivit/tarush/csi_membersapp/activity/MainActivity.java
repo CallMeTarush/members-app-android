@@ -1,11 +1,17 @@
 package com.csivit.tarush.csi_membersapp.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,11 +21,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import com.csivit.tarush.csi_membersapp.Fragments.Blog_fragment;
+import com.csivit.tarush.csi_membersapp.Fragments.Chat_fragment;
+import com.csivit.tarush.csi_membersapp.Fragments.Events_fragment;
+import com.csivit.tarush.csi_membersapp.Fragments.Help_fragment;
 import com.csivit.tarush.csi_membersapp.R;
 
+import static android.R.attr.action;
+
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+         {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,76 +68,68 @@ public class MainActivity extends AppCompatActivity
         // Start the thread
         t.start();
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setCustomView(R.layout.action_bar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#181c4f")));
+
+        int[] icons = {R.drawable.events,
+                R.drawable.blog,
+                R.drawable.chat,
+                R.drawable.help
+        };
+
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Events"));
+        tabLayout.addTab(tabLayout.newTab().setText("Blog"));
+        tabLayout.addTab(tabLayout.newTab().setText("Chat"));
+        tabLayout.addTab(tabLayout.newTab().setText("Help"));
+
+        for (int i = 0; i < icons.length; i++) {
+            tabLayout.getTabAt(i).setIcon(icons[i]);
+        }
+        replaceFragment(new Events_fragment());
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Underdev", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    replaceFragment(new Events_fragment());
+                } else if (tab.getPosition() == 1) {
+                    replaceFragment(new Blog_fragment());
+                } else if (tab.getPosition() == 2) {
+                    replaceFragment(new Chat_fragment());
+                } else {
+                    replaceFragment(new Help_fragment());
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+             public void setActionBarTitle(String title) {
+                 TextView action = (TextView) findViewById(R.id.mytext);
+                 action.setText(title.toString());
+             }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+             public void replaceFragment(Fragment fragment) {
+                 FragmentManager fragmentManager = getSupportFragmentManager();
+                 android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+                 transaction.replace(R.id.fragment_container, fragment);
+                 transaction.commit();
+             }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+         }
 
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_Chatbot) {
-
-        } else if (id == R.id.nav_Events) {
-
-        } else if (id == R.id.nav_Csiblog) {
-            Intent gotoblog = new Intent(MainActivity.this,CSI_blog.class);
-            MainActivity.this.startActivity(gotoblog);
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-}

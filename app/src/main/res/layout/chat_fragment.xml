@@ -1,0 +1,58 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
+    tools:context="android.Mayank.CsiApp.Fragments.Chat_fragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:paddingBottom="20dp"
+        android:background="#f36e7c"></LinearLayout>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="20dp">
+    <ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="25dp"
+        android:scrollbars="none"
+        android:stackFromBottom="true"
+      android:transcriptMode="alwaysScroll"
+    android:id="@+id/list"
+        android:layout_above="@+id/send"
+    android:orientation="vertical"></ListView>
+
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="60dp"
+     android:background="#ffffff"
+     android:paddingBottom="-10dp"
+     android:id="@+id/send"
+     android:orientation="horizontal"
+     android:layout_alignParentBottom="true">
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:inputType="textMultiLine"
+        android:hint="Write Message"
+        android:layout_gravity="bottom"
+        android:ems="10"
+        android:id="@+id/editText" />
+
+    <Button
+        android:text="send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:id="@+id/button" />
+ </LinearLayout>
+</RelativeLayout>
+
+</FrameLayout>

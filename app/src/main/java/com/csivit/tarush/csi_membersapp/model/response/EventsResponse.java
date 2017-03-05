@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class EventsResponse {
+public class  EventsResponse {
 
     @SerializedName("status")
     private Status status;

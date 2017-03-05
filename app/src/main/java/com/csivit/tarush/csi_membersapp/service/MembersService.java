@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MembersService {
 
-    private static final String BASE_URL = "https://private-d0dbd3-csimem.apiary-mock.com";
+    private static final String BASE_URL = "api-memberapp.csivit.com:8080";
     private static Retrofit retrofit = null;
     private String token;
 
