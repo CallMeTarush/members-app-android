@@ -1,18 +1,24 @@
 package com.csivit.tarush.csi_membersapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.csivit.tarush.csi_membersapp.R;
+import com.csivit.tarush.csi_membersapp.activity.IntroActivity;
+import com.csivit.tarush.csi_membersapp.activity.LoginActivity;
 import com.csivit.tarush.csi_membersapp.model.system.User;
 import com.csivit.tarush.csi_membersapp.service.DataStore;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+
 
 public class RegistrationFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -46,7 +52,7 @@ public class RegistrationFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    private TextView mLoginBtn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class RegistrationFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     public void saveDetails(){
@@ -73,6 +80,13 @@ public class RegistrationFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_registration, container, false);
 
         ButterKnife.bind(this, v);
+        mLoginBtn = (TextView) v.findViewById(R.id.button);
+        mLoginBtn.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return v;
     }

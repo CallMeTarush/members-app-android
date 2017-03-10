@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,9 +32,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.csivit.tarush.csi_membersapp.R;
+import com.csivit.tarush.csi_membersapp.service.MembersAPI;
+import com.csivit.tarush.csi_membersapp.service.MembersService;
+import com.csivit.tarush.csi_membersapp.model.response.AuthResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -69,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setActivityBackgroundColor(0x7CB342);
+        setActivityBackgroundColor(0x5D95FC);
 
         // Set up the login form.
 
@@ -198,7 +206,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with new logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -305,33 +313,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private MembersAPI membersAPI;
+        private AuthResponse authResponse;
+        private boolean success;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
+            membersAPI = new MembersService().getAPI();
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+            Call<AuthResponse> call = membersAPI.doLogin(mEmail,mPassword);
+            call.enqueue(new Callback<AuthResponse>() {
+                @Override
+                public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
+                    if(response.code()==200) {
+                        authResponse = response.body();
+                        success = true;
+                        //Store the token
+                        Log.i("Token", authResponse.getUserToken());
 
-            String credential = DUMMY_CREDENTIALS;
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+
+                        finish();
+                        Intent backtomain = new Intent(LoginActivity.this,MainActivity.class);
+                        LoginActivity.this.startActivity(backtomain);
+
+                    } else {
+                            mPasswordView.setError(getString(R.string.error_incorrect_password));
+                            mPasswordView.requestFocus();
+                        }
+
                 }
 
 
-            // TODO: register the new account here.
-            return false;
+                @Override
+                public void onFailure(Call call, Throwable t) {
+                    call.cancel();
+                }
+            });
+
+
+            return true;
         }
 
         @Override
@@ -339,14 +364,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                finish();
-                Intent backtomain = new Intent(LoginActivity.this,MainActivity.class);
-                LoginActivity.this.startActivity(backtomain);
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
+
         }
 
         @Override
