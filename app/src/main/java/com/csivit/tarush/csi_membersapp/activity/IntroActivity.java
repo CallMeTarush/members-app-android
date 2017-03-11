@@ -26,7 +26,7 @@ public class IntroActivity extends AppIntro{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntro2Fragment.newInstance("Some Title", "Gello", R.drawable.csi_logo02,getResources().getColor(R.color.colorPrimary)));
+        addSlide(AppIntro2Fragment.newInstance("Computer Society of India", "Hello", R.drawable.csi_logo02,getResources().getColor(R.color.colorPrimary)));
         addSlide(RegistrationFragment.newInstance(null, null));
         addSlide(new MemberTypeFragment());
 

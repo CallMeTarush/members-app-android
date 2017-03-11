@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="13dp"
                     android:paddingRight="13dp"
-                    android:text="Are you ready?"
+                    android:text="Short Desc Text"
                     android:textColor="#e6f6f6f6"
                     android:textSize="10sp" />
             </LinearLayout>

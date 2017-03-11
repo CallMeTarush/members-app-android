@@ -26,11 +26,13 @@ public class MyRecyclerViewAdapter extends RecyclerView
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
-        TextView label;
+        TextView label,time,venue;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.event_Title);
+            time = (TextView) itemView.findViewById(R.id.event_time);
+            venue = (TextView) itemView.findViewById(R.id.event_venue);
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -62,6 +64,8 @@ public class MyRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.label.setText(mDataset.get(position).getEventName());
+        holder.time.setText(mDataset.get(position).getEventTime());
+        holder.venue.setText(mDataset.get(position).getEventVenue());
     }
 
 

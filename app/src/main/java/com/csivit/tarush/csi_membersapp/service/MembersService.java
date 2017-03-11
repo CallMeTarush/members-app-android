@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MembersService {
 
     private static final String BASE_URL = "http://api-memberapp.csivit.com:8080/api/";
-    private static Retrofit retrofit = null;
+    private Retrofit retrofit = null;
     private String token;
 
     public MembersService(){

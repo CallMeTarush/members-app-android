@@ -34,6 +34,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.csivit.tarush.csi_membersapp.R;
+import com.csivit.tarush.csi_membersapp.service.DataStore;
 import com.csivit.tarush.csi_membersapp.service.MembersAPI;
 import com.csivit.tarush.csi_membersapp.service.MembersService;
 import com.csivit.tarush.csi_membersapp.model.response.AuthResponse;
@@ -342,10 +343,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         e.putString("token",authResponse.getUserToken());
                         e.apply();
 
+                        DataStore.getInstance().setJwtToken(authResponse.getUserToken());
+
 
                         finish();
+
                         Intent backtomain = new Intent(LoginActivity.this,MainActivity.class);
-                        LoginActivity.this.startActivity(backtomain);
+                        startActivity(backtomain);
+                        LoginActivity.this.finish();
 
                     } else {
                             mPasswordView.setError(getString(R.string.error_incorrect_password));
