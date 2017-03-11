@@ -2,6 +2,8 @@ package com.csivit.tarush.csi_membersapp.service;
 
 
 import com.csivit.tarush.csi_membersapp.model.response.AuthResponse;
+import com.csivit.tarush.csi_membersapp.model.response.EventsResponse;
+import com.csivit.tarush.csi_membersapp.model.system.Event;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -26,6 +28,8 @@ public interface MembersAPI {
     @POST("users/password")
     Call<AuthResponse> changePassword(@Field("old_password") String oldPassword,
                                       @Field("new_password") String newPassword);
+    @GET("events")
+    Call<EventsResponse> getEvents();
 
 
     //TODO: Add other routes

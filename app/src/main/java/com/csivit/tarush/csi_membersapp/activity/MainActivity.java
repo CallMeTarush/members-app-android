@@ -46,19 +46,15 @@ public class MainActivity extends AppCompatActivity
                         .getDefaultSharedPreferences(getBaseContext());
 
                 //  Create a new boolean and preference and set it to true
-                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+                boolean loginReq = getPrefs.getBoolean("loginReq", true);
 
                 //  If the activity has never started before...
-                if (isFirstStart) {
+                if (loginReq) {
 
                     //  Launch app intro
                     Intent i = new Intent(MainActivity.this, IntroActivity.class);
                     startActivity(i);
-                    SharedPreferences.Editor e = getPrefs.edit();
 
-                    e.putBoolean("firstStart", false);
-
-                    e.apply();
 
                     MainActivity.this.finish();
                 }
@@ -95,8 +91,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
+                    setActionBarTitle("Events");
                     replaceFragment(new Events_fragment());
                 } else if (tab.getPosition() == 1) {
+                    setActionBarTitle("Blog");
                     replaceFragment(new Blog_fragment());
                 } else if (tab.getPosition() == 2) {
                     replaceFragment(new Chat_fragment());

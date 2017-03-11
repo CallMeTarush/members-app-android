@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -315,7 +317,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mPassword;
         private MembersAPI membersAPI;
         private AuthResponse authResponse;
-        private boolean success;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -332,9 +333,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
                     if(response.code()==200) {
                         authResponse = response.body();
-                        success = true;
-                        //Store the token
-                        Log.i("Token", authResponse.getUserToken());
+
+
+                        SharedPreferences getPrefs = PreferenceManager
+                                .getDefaultSharedPreferences(getBaseContext());
+                        SharedPreferences.Editor e = getPrefs.edit();
+                        e.putBoolean("loginReq", false);
+                        e.putString("token",authResponse.getUserToken());
+                        e.apply();
 
 
                         finish();

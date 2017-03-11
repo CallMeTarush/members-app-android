@@ -28,8 +28,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import com.csivit.tarush.csi_membersapp.CustomAdapters.MyRecyclerViewAdapter;
 
-public class Events_fragment extends ListFragment {
+public class Events_fragment extends Fragment {
 
     ListView list;
     String[] events = {
@@ -42,6 +43,9 @@ public class Events_fragment extends ListFragment {
             R.drawable.icon2,
             R.drawable.icon3
     };
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     ArrayList<HashMap<String,String>> data = new ArrayList<HashMap<String,String>>();
     SimpleAdapter adapter;
@@ -54,32 +58,14 @@ public class Events_fragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        ((MainActivity) getActivity())
-                .setActionBarTitle("Events");
 
         View view = inflater.inflate(R.layout.fragment_events_fragment, container, false);
-
-        HashMap<String, String> map = new HashMap<String, String>();
-
-        for(int i=0;i<events.length;i++)
-        {
-            map = new HashMap<String, String>();
-            map.put("Event",events[i]);
-            map.put("Image",Integer.toString(imageId[i]));
-
-            data.add(map);
-        }
-        //Keys in Map
-        String[] from = {"Event","Image"};
-
-        //Ids of Views
-        int[] to = {R.id.event_Title,R.id.img_thumb};
-
-        //Adapter
-        adapter = new SimpleAdapter(getActivity(),data,R.layout.event_list_item,from,to);
-        setListAdapter(adapter);
-
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(view.getContext());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new MyRecyclerViewAdapter(getEvents());
+        mRecyclerView.setAdapter(mAdapter);
         return view;
     }
 
@@ -88,12 +74,23 @@ public class Events_fragment extends ListFragment {
 
         super.onStart();
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
                 Toast.makeText(getActivity(), data.get(pos).get("Event"),Toast.LENGTH_SHORT).show();
             }
         });
+        */
+    }
+
+    private ArrayList<Event> getEvents() {
+        ArrayList results = new ArrayList<Event>();
+        for (int index = 0; index < 20; index++) {
+            Event obj = new Event();//Add event code here
+            obj.setEventName("Riddler");
+            results.add(index, obj);
+        }
+        return results;
     }
 }
 

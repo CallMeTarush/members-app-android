@@ -6,4 +6,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!--Workaround @+id/visible error which is from a bug in appcompact -->
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
 </resources>
