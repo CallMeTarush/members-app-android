@@ -7,11 +7,18 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.csivit.tarush.csi_membersapp.R;
 import com.csivit.tarush.csi_membersapp.fragment.MemberTypeFragment;
 import com.csivit.tarush.csi_membersapp.fragment.RegistrationFragment;
 import com.csivit.tarush.csi_membersapp.model.response.AuthResponse;
+import com.csivit.tarush.csi_membersapp.model.system.User;
 import com.csivit.tarush.csi_membersapp.presenter.IntroPresenter;
 import com.csivit.tarush.csi_membersapp.service.DataStore;
 import com.github.paolorotolo.appintro.AppIntro;
@@ -21,16 +28,19 @@ import com.github.paolorotolo.appintro.AppIntro2Fragment;
 public class IntroActivity extends AppIntro{
 
     private IntroPresenter introPresenter;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntro2Fragment.newInstance("Computer Society of India", "Hello", R.drawable.csi_logo02,getResources().getColor(R.color.colorPrimary)));
+        addSlide(AppIntro2Fragment.newInstance("", "Hello", R.drawable.csi,getResources().getColor(R.color.colorPrimary)));
         addSlide(RegistrationFragment.newInstance(null, null));
         addSlide(new MemberTypeFragment());
 
+
         showSkipButton(false);
+
+
+
     }
 
     @Override
@@ -44,6 +54,18 @@ public class IntroActivity extends AppIntro{
         super.onDonePressed(currentFragment);
 
         //TODO: Get Values from the Member Type Fragment and update the User Object
+
+        int checked=((RadioGroup)findViewById(R.id.mem_type_group)).getCheckedRadioButtonId();
+        if(checked == R.id.radioButton1) checked=3;
+        else if(checked ==R.id.radioButton2) checked=2;
+        else if(checked ==R.id.radioButton3) checked=0;
+
+        User r= DataStore.getInstance().getRegisteringUser();
+        r.setUserMemberType(checked);
+        r.setUserKey(((EditText) findViewById(R.id.input_mem_key)).getText().toString());
+        DataStore.getInstance().setRegisteringUser(r);
+
+        Log.i("IA","A");
 
         doSignUp();
         // Do something when users tap on Done button.
@@ -60,13 +82,18 @@ public class IntroActivity extends AppIntro{
         introPresenter = new IntroPresenter(this, new IntroPresenter.IntroPresenterListener() {
             @Override
             public void onAuthSuccess(AuthResponse authResponse) {
-                progressDialog.hide();
+                progressDialog.dismiss();
+
+                Log.i("IA","1");
                 if(authResponse.getStatus().getStatusCode() == 201){
                     SharedPreferences getPrefs = PreferenceManager
                             .getDefaultSharedPreferences(getBaseContext());
                     SharedPreferences.Editor e = getPrefs.edit();
-                    e.putString("userToken", authResponse.getUserToken());
+                    e.putString("token", authResponse.getUserToken());
+                    e.putBoolean("loginReq",false);
                     e.apply();
+
+                    Log.i("IA","2");
 
                     Intent i = new Intent(IntroActivity.this, MainActivity.class);
                     startActivity(i);
@@ -76,8 +103,10 @@ public class IntroActivity extends AppIntro{
             }
 
             @Override
-            public void onAuthFailure(Error e) {
+            public void onAuthFailure() {
 
+                Log.i("IA","3");
+                progressDialog.dismiss();
             }
         });
 
@@ -94,5 +123,6 @@ public class IntroActivity extends AppIntro{
             f.saveDetails();
         }
     }
+
 
 }

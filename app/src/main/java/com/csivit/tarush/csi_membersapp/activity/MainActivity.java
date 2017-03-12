@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             for (int i = 0; i < icons.length; i++) {
                 tabLayout.getTabAt(i).setIcon(icons[i]);
             }
+            setActionBarTitle("Events");
             replaceFragment(new Events_fragment());
 
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                     } else if (tab.getPosition() == 2) {
                         replaceFragment(new Chat_fragment());
                     } else {
-                        replaceFragment(new Event_desc_fragment());
+                        replaceFragment(new Help_fragment());
                     }
 
                 }
@@ -132,6 +133,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                  FragmentManager fragmentManager = getSupportFragmentManager();
                  android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
                  transaction.replace(R.id.fragment_container, fragment);
+                 transaction.addToBackStack("tag");
                  transaction.commit();
              }
 

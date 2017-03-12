@@ -18,13 +18,13 @@ public class User {
     private String userPhoneNo;
 
     @SerializedName("mem_type")
-    private String userMemberType;
+    private int userMemberType = 0;
 
     @SerializedName("email")
     private String userEmail;
 
     @SerializedName("key")
-    private String userKey;
+    private String userKey = "";
 
     @SerializedName("password")
     private String userPassword;
@@ -61,11 +61,11 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public String getUserMemberType() {
+    public int getUserMemberType() {
         return userMemberType;
     }
 
-    public void setUserMemberType(String userMemberType) {
+    public void setUserMemberType(int userMemberType) {
         this.userMemberType = userMemberType;
     }
 

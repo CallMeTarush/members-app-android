@@ -1,5 +1,6 @@
 package com.csivit.tarush.csi_membersapp.Fragments;
 
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.csivit.tarush.csi_membersapp.CustomAdapters.MyRecyclerViewAdapter;
 import com.csivit.tarush.csi_membersapp.R;
+import com.csivit.tarush.csi_membersapp.activity.IntroActivity;
 import com.csivit.tarush.csi_membersapp.model.response.EventsResponse;
 import com.csivit.tarush.csi_membersapp.model.system.Event;
 import com.csivit.tarush.csi_membersapp.service.DataStore;
@@ -35,10 +37,14 @@ import retrofit2.Response;
 public class Event_desc_fragment extends Fragment {
     View root;
     private DateFormat fmt = new SimpleDateFormat("dd MMMM, yyyy", Locale.US);
-
+    private ProgressDialog progressDialog;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         root = (View) inflater.inflate(R.layout.event_desc,container,false);
+        progressDialog = new ProgressDialog(inflater.getContext(),R.style.AppTheme_Dark_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("Loading");
+        progressDialog.show();
 
         return root;
     }
@@ -98,6 +104,7 @@ public class Event_desc_fragment extends Fragment {
 
         protected void onPostExecute(Bitmap result){
             imageView.setImageBitmap(result);
+            progressDialog.dismiss();
         }
     }
 }

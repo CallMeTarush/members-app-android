@@ -3,6 +3,7 @@ package com.csivit.tarush.csi_membersapp.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class RegistrationFragment extends Fragment {
         newUser.setUserRegNo(etRegNo.getText().toString());
         newUser.setUserPassword(etPassword.getText().toString());
         newUser.setUserPhoneNo(etPhone.getText().toString());
+        Log.i("m",newUser.getUserEmail());
 
         DataStore.getInstance().setRegisteringUser(newUser);
     }
