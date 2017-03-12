@@ -11,6 +11,7 @@ import com.csivit.tarush.csi_membersapp.model.response.EventDetailsResponse;
 import com.csivit.tarush.csi_membersapp.model.response.EventsResponse;
 import com.csivit.tarush.csi_membersapp.model.system.Event;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -62,6 +63,7 @@ public class Events_fragment extends Fragment {
         fetchEvents(view);
         return view;
     }
+
     private void fetchEvents(View view){
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -71,8 +73,8 @@ public class Events_fragment extends Fragment {
 
         MembersAPI membersAPI = new MembersService().getAPI();
         Call<EventsResponse> call = membersAPI.getEvents();
-        Log.i("AL",call.request().header("Authorization")+"");
         final ArrayList results = new ArrayList<Event>();
+        final MyRecyclerViewAdapter.PassEvent mypassevent=(MyRecyclerViewAdapter.PassEvent) getActivity();
         Log.i("AL", DataStore.getInstance().getJwtToken());
         call.enqueue(new Callback<EventsResponse>() {
             @Override
@@ -83,7 +85,7 @@ public class Events_fragment extends Fragment {
                     for (int i = 0; i < eventList.size(); i++) {
                         results.add(i, eventList.get(i));
                     }
-                    mAdapter = new MyRecyclerViewAdapter(results);
+                    mAdapter = new MyRecyclerViewAdapter(results,mypassevent);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }

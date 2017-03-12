@@ -10,6 +10,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface MembersAPI {
 
@@ -30,6 +31,9 @@ public interface MembersAPI {
                                       @Field("new_password") String newPassword);
     @GET("events")
     Call<EventsResponse> getEvents();
+
+    @GET("events/{id}")
+    Call<Event> getEvent(@Path("id") String id);
 
 
     //TODO: Add other routes

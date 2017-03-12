@@ -24,16 +24,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.csivit.tarush.csi_membersapp.CustomAdapters.MyRecyclerViewAdapter;
 import com.csivit.tarush.csi_membersapp.Fragments.Blog_fragment;
 import com.csivit.tarush.csi_membersapp.Fragments.Chat_fragment;
+import com.csivit.tarush.csi_membersapp.Fragments.Event_desc_fragment;
 import com.csivit.tarush.csi_membersapp.Fragments.Events_fragment;
 import com.csivit.tarush.csi_membersapp.Fragments.Help_fragment;
 import com.csivit.tarush.csi_membersapp.R;
+import com.csivit.tarush.csi_membersapp.model.system.Event;
 import com.csivit.tarush.csi_membersapp.service.DataStore;
 
 import static android.R.attr.action;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements MyRecyclerViewAdapter.PassEvent
          {
 
     @Override
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity
                     } else if (tab.getPosition() == 2) {
                         replaceFragment(new Chat_fragment());
                     } else {
-                        replaceFragment(new Help_fragment());
+                        replaceFragment(new Event_desc_fragment());
                     }
 
                 }
@@ -110,6 +113,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+            @Override
+            public void eventPasser(String id){
+                Log.i("MA",id);
+                Event_desc_fragment e = new Event_desc_fragment();
+                e.loadEvent(id);
+                replaceFragment(e);
+
+            }
 
              public void setActionBarTitle(String title) {
                  TextView action = (TextView) findViewById(R.id.mytext);

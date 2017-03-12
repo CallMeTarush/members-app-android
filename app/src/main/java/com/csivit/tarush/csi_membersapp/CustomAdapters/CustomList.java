@@ -33,10 +33,8 @@ public class CustomList extends ArrayAdapter<String>{
         View rowView= inflater.inflate(R.layout.event_list_item, null, true);
         TextView txtTitle = (TextView) rowView.findViewById(R.id.event_Title);
 
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.img_thumb);
         txtTitle.setText(web[position]);
 
-        imageView.setImageResource(imageId[position]);
         return rowView;
     }
 }
