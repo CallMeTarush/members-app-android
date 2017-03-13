@@ -48,15 +48,17 @@ public class Event_desc_fragment extends Fragment {
 
         return root;
     }
+
+
+
+
     public void loadEvent(String id){
-        Log.i("Fragment",id);
 
         MembersAPI membersAPI = new MembersService().getAPI();
         Call<Event> call = membersAPI.getEvent(id);
         call.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
-                Log.i("AL",response.code()+"");
                 if(response.code() == 200) {
                     Event event = response.body();
                     ((TextView) getActivity().findViewById(R.id.event_desc_title)).setText(event.getEventName());

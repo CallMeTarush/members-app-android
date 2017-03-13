@@ -48,9 +48,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
         @Override
         public void onClick(View v) {
             String event_id = ((TextView) v.findViewById(R.id.event_id)).getText().toString();
-            Log.i("RA",event_id);
             passEvent.eventPasser(event_id);
-            Log.i("RA",event_id);
 
         }
     }

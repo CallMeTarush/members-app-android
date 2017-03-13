@@ -53,28 +53,12 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
-    private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-
-    private static final String DUMMY_CREDENTIALS = "tarush@:baller123";
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mRegNoView;
     private EditText mPasswordView;
-    private View mProgressView;
-    private View mLoginFormView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +68,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // Set up the login form.
 
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mRegNoView = (AutoCompleteTextView) findViewById(R.id.login_username);
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = (EditText) findViewById(R.id.login_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -106,8 +90,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
     }
 
 
@@ -125,11 +107,11 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mRegNoView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String reg_no = mRegNoView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -142,14 +124,14 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+        // Check for a valid registeration address.
+        if (TextUtils.isEmpty(reg_no)) {
+            mRegNoView.setError(getString(R.string.error_field_required));
+            focusView = mRegNoView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        } else if (!isRegValid(reg_no)) {
+            mRegNoView.setError(getString(R.string.error_invalid_reg));
+            focusView = mRegNoView;
             cancel = true;
         }
 
@@ -160,12 +142,12 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(reg_no, password);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isRegValid(String reg_no) {
         //TODO: Replace this with new logic
         return true;
     }
@@ -181,13 +163,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mRegNo;
         private final String mPassword;
         private MembersAPI membersAPI;
         private AuthResponse authResponse;
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String regno, String password) {
+            mRegNo = regno;
             mPassword = password;
             membersAPI = new MembersService().getAPI();
         }
@@ -195,7 +177,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... params) {
 
-            Call<AuthResponse> call = membersAPI.doLogin(mEmail,mPassword);
+            Call<AuthResponse> call = membersAPI.doLogin(mRegNo,mPassword);
+
             call.enqueue(new Callback<AuthResponse>() {
                 @Override
                 public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {

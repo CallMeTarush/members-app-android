@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                         .getDefaultSharedPreferences(getBaseContext());
 
         boolean loginReq = getPrefs.getBoolean("loginReq", true);
+
+        //Check if logged in
         if (loginReq) {
             Intent i = new Intent(MainActivity.this, IntroActivity.class);
                     startActivity(i);
@@ -147,7 +149,6 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
 
             @Override
             public void eventPasser(String id){
-                Log.i("MA",id);
                 Event_desc_fragment e = new Event_desc_fragment();
                 e.loadEvent(id);
                 replaceFragment(e);

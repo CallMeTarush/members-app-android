@@ -28,15 +28,17 @@ public class MemberTypeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_member_type, container, false);
 
         RadioGroup radioGroup = (RadioGroup) v.findViewById(R.id.mem_type_group);
-        final EditText memkeyinput = ((EditText) v.findViewById(R.id.input_mem_key));
+        final EditText memKeyInput = ((EditText) v.findViewById(R.id.input_mem_key));
+
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.radioButton1 || checkedId == R.id.radioButton2){
-                    memkeyinput.setVisibility(View.VISIBLE);
+                    memKeyInput.setVisibility(View.VISIBLE);
                 }else
-                    memkeyinput.setVisibility(View.GONE);
+                    memKeyInput.setVisibility(View.GONE);
             }
         });
 

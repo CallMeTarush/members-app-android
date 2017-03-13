@@ -5,6 +5,9 @@ import com.csivit.tarush.csi_membersapp.activity.MainActivity;
 import com.csivit.tarush.csi_membersapp.Message.Message;
 import com.csivit.tarush.csi_membersapp.Message.MessageAdapter;
 import com.csivit.tarush.csi_membersapp.R;
+import com.csivit.tarush.csi_membersapp.model.system.User;
+import com.csivit.tarush.csi_membersapp.service.DataStore;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -40,6 +43,11 @@ public class Chat_fragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
+        User current = DataStore.getInstance().getRegisteringUser();
+        if(current.getUserMemberType() == 0 ){
+            View v = inflater.inflate(R.layout.chat_nonmember_fragment,container ,false);
+            return v;
+        }
         View v = inflater.inflate(R.layout.chat_fragment, container, false);
 
         ((MainActivity) getActivity()).setActionBarTitle("Chat");

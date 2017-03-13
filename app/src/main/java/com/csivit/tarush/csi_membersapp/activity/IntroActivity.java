@@ -33,7 +33,7 @@ public class IntroActivity extends AppIntro{
         super.onCreate(savedInstanceState);
 
         addSlide(AppIntro2Fragment.newInstance("", "Hello", R.drawable.csi,getResources().getColor(R.color.colorPrimary)));
-        addSlide(RegistrationFragment.newInstance(null, null));
+        addSlide(new RegistrationFragment());
         addSlide(new MemberTypeFragment());
 
 
@@ -53,7 +53,6 @@ public class IntroActivity extends AppIntro{
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
 
-        //TODO: Get Values from the Member Type Fragment and update the User Object
 
         int checked=((RadioGroup)findViewById(R.id.mem_type_group)).getCheckedRadioButtonId();
         if(checked == R.id.radioButton1) checked=3;
@@ -65,10 +64,9 @@ public class IntroActivity extends AppIntro{
         r.setUserKey(((EditText) findViewById(R.id.input_mem_key)).getText().toString());
         DataStore.getInstance().setRegisteringUser(r);
 
-        Log.i("IA","A");
 
         doSignUp();
-        // Do something when users tap on Done button.
+
     }
 
     private void doSignUp(){
@@ -83,9 +81,8 @@ public class IntroActivity extends AppIntro{
             @Override
             public void onAuthSuccess(AuthResponse authResponse) {
                 progressDialog.dismiss();
-
-                Log.i("IA","1");
                 if(authResponse.getStatus().getStatusCode() == 201){
+
                     SharedPreferences getPrefs = PreferenceManager
                             .getDefaultSharedPreferences(getBaseContext());
                     SharedPreferences.Editor e = getPrefs.edit();
@@ -93,7 +90,6 @@ public class IntroActivity extends AppIntro{
                     e.putBoolean("loginReq",false);
                     e.apply();
 
-                    Log.i("IA","2");
 
                     Intent i = new Intent(IntroActivity.this, MainActivity.class);
                     startActivity(i);
@@ -105,7 +101,6 @@ public class IntroActivity extends AppIntro{
             @Override
             public void onAuthFailure() {
 
-                Log.i("IA","3");
                 progressDialog.dismiss();
             }
         });

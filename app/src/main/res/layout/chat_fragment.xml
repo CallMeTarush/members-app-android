@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#EEEEEE"
     android:orientation="vertical"
-    tools:context="android.Mayank.CsiApp.Fragments.Chat_fragment">
+    tools:context="com.csivit.tarush.csi_membersapp.Fragments.Chat_fragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="10dp"
