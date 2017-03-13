@@ -32,7 +32,14 @@ import com.csivit.tarush.csi_membersapp.Fragments.Events_fragment;
 import com.csivit.tarush.csi_membersapp.Fragments.Help_fragment;
 import com.csivit.tarush.csi_membersapp.R;
 import com.csivit.tarush.csi_membersapp.model.system.Event;
+import com.csivit.tarush.csi_membersapp.model.system.User;
 import com.csivit.tarush.csi_membersapp.service.DataStore;
+import com.csivit.tarush.csi_membersapp.service.MembersAPI;
+import com.csivit.tarush.csi_membersapp.service.MembersService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.R.attr.action;
 
@@ -52,11 +59,13 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
             Intent i = new Intent(MainActivity.this, IntroActivity.class);
                     startActivity(i);
                     MainActivity.this.finish();
+
+
                 }
         else {
             String token = getPrefs.getString("token", "");
             DataStore.getInstance().setJwtToken(token);
-            Log.i("MA",DataStore.getInstance().getJwtToken());
+            setDataStoreUser();
 
             setContentView(R.layout.activity_main);
 
@@ -93,8 +102,10 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
                         setActionBarTitle("Blog");
                         replaceFragment(new Blog_fragment());
                     } else if (tab.getPosition() == 2) {
+                        setActionBarTitle("Chat");
                         replaceFragment(new Chat_fragment());
                     } else {
+                        setActionBarTitle("Help");
                         replaceFragment(new Help_fragment());
                     }
 
@@ -114,6 +125,25 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerViewAda
         }
     }
 
+    private void setDataStoreUser(){
+        MembersAPI membersAPI = new MembersService().getAPI();
+        Call<User> loggedInUser = membersAPI.getUser();
+        loggedInUser.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.code() == 200){
+                    User current = response.body();
+                    DataStore.getInstance().setRegisteringUser(current);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+
+    }
 
             @Override
             public void eventPasser(String id){

@@ -34,6 +34,9 @@ public interface MembersAPI {
     @GET("events/{id}")
     Call<Event> getEvent(@Path("id") String id);
 
+    @GET("user")
+    Call<User> getUser();
+
 
     //TODO: Add other routes
 }
