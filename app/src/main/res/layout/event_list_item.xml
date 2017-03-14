@@ -1,45 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp"
-    android:elevation="5dp"
-    card_view:cardCornerRadius="5dp">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="horizontal">
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:elevation="5dp"
+        card_view:cardCornerRadius="10dp">
 
-        <ImageView
-            android:id="@+id/img_thumb"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_margin="7dp"
-            android:src="@drawable/tab_background"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="0dp">
 
-        <TextView
-            android:id="@+id/event_Title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Title"
-            android:textColor="#616161"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="75dp"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:visibility="invisible"
+                    android:id="@+id/event_id"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
+                android:background="@android:color/background_light"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/event_Title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
+                    android:text="Title"
+                    android:textColor="#616161"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/event_venue"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:text="Venue : SJT 203"
+                    android:textColor="#616161"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/event_time"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:text="Time : 11 AM to 1 PM"
+                    android:textColor="#616161"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/event_date"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_weight="1"
+                    android:text="Date : 12th Feb 2017"
+                    android:textColor="#616161"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </LinearLayout>
 
 
-    </LinearLayout>
-
-
-
-
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

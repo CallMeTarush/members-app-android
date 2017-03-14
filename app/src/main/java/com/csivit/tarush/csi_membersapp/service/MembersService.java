@@ -16,8 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MembersService {
 
-    private static final String BASE_URL = "api-memberapp.csivit.com:8080";
-    private static Retrofit retrofit = null;
+    private static final String BASE_URL = "http://api-memberapp.csivit.com:8080/api/";
+    private Retrofit retrofit = null;
     private String token;
 
     public MembersService(){
@@ -38,7 +38,7 @@ public class MembersService {
             }
 
             Request newRequest = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + token)
+                    .addHeader("Authorization", "JWT " + token)
                     .build();
             return chain.proceed(newRequest);
         }
@@ -58,5 +58,7 @@ public class MembersService {
         }
         return retrofit.create(MembersAPI.class);
     }
+
+
 
 }
